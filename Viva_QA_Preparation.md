@@ -4,140 +4,91 @@
 **Student Name:** Dheeraj  
 **Student ID:** E25B070814  
 
-This guide prepares you to answer any question your evaluator or professor asks during the oral viva without needing to check your video.
+This guide equips you to answer advanced questions during the oral viva on theory, derivations, numerical methods, and code architecture.
 
 ---
 
-## 📌 Part 1: Core Mathematical Concepts & Definitions
+## 📌 Part 1: Core Mathematical Definitions & Theory
 
 ### Q1: What is Gaussian Elimination?
 **Answer:**  
-Gaussian elimination is a systematic algorithm used to solve systems of linear equations. It operates on an augmented matrix by applying a sequence of elementary row operations (EROs) to transform the coefficient matrix into an **upper triangular Row Echelon Form (REF)**. Once in echelon form, the variables are decoupled, allowing the exact values of the unknowns to be calculated efficiently via **back-substitution**.
+Gaussian elimination is an algorithmic procedure that solves systems of linear equations. It operates on an augmented matrix by applying a finite sequence of Elementary Row Operations (EROs) to transform the coefficient matrix into an **upper triangular Row Echelon Form (REF)**. Once decoupled, exact values of the unknowns are extracted from bottom to top via **back-substitution**.
 
-### Q2: What is an Augmented Matrix?
+### Q2: What are the Three Elementary Row Operations (EROs), and why are they valid?
 **Answer:**  
-An augmented matrix $[A \mid b]$ combines the coefficient matrix $A$ (size $m \times n$) and the constant column vector $b$ (size $m \times 1$) into a single matrix of size $m \times (n+1)$.  
-It strips away the variable letters ($x, y, z$) to streamline computations while preserving all numerical relationships and constraints.
+1. **Row Swap ($R_i \leftrightarrow R_j$):** Exchanging two rows. Valid because reordering equations does not alter their shared intersection.
+2. **Scalar Multiplication ($k \cdot R_i \to R_i, k \neq 0$):** Multiplying every entry in a row by a non-zero scalar. Valid because multiplying both sides of an equality by a non-zero constant preserves balance.
+3. **Row Addition / Replacement ($R_i + k \cdot R_j \to R_i$):** Adding a multiple of row $j$ to row $i$. Valid because adding equal quantities to equal quantities maintains equality.
 
-### Q3: What are the Three Elementary Row Operations (EROs), and why are they valid?
-**Answer:**  
-The three EROs are:
-1. **Row Swap ($R_i \leftrightarrow R_j$):** Exchanging two rows. Valid because reordering equations does not alter the system's solution set.
-2. **Scalar Multiplication ($k \cdot R_i \to R_i, k \neq 0$):** Multiplying every entry in a row by a non-zero scalar. Valid because multiplying both sides of an equality by a non-zero constant preserves equality.
-3. **Row Addition / Replacement ($R_i + k \cdot R_j \to R_i$):** Adding a scalar multiple of row $j$ to row $i$. Valid because if $L_1 = R_1$ and $L_2 = R_2$, then $(L_1 + k L_2) = (R_1 + k R_2)$ remains true.
+Because all three operations are strictly **invertible**, the original matrix and the resulting matrix are **row equivalent** ($A \sim B$) and possess the exact same solution set.
 
-Because all three operations are **reversible** (invertible), the original matrix and the resulting matrix are **row equivalent** ($A \sim B$) and have the exact same solution set.
-
-### Q4: What defines Row Echelon Form (REF)?
+### Q3: What is Row Echelon Form (REF)?
 **Answer:**  
 A matrix is in Row Echelon Form if:
-1. All non-zero rows are positioned above any rows of all zeros.
-2. The leading coefficient (the **Pivot**) of a non-zero row is strictly to the right of the leading coefficient of the row above it.
+1. Any row consisting entirely of zeros is grouped at the very bottom.
+2. The leading coefficient (the **Pivot**) of each non-zero row is strictly to the right of the leading coefficient of the row above it (forming a descending staircase).
 3. All entries directly **below** each pivot are strictly zero.
-
-*(Note: If we take it one step further so that every pivot is 1 and all entries both above and below each pivot are zero, that is **Reduced Row Echelon Form (RREF)** or Gauss-Jordan elimination).*
 
 ---
 
-## 📌 Part 2: Step-by-Step Derivation of the Worked Example
+## 📌 Part 2: Advanced Topics & Edge Cases (Crucial for Top Grades)
 
-If the professor asks: *"Dheeraj, walk me through the system you solved and justify every row operation."*
+### Q4: What happens if a pivot position contains a zero?
+**Answer:**  
+If a diagonal pivot is zero, we cannot divide by it or use it to eliminate entries below.  
+The mathematical remedy is a **Row Swap ($R_i \leftrightarrow R_j$)** with a row below that has a non-zero entry in that column. If all entries below are also zero, we move to the next column to find our next pivot.
 
-### The Original System:
+### Q5: What is Partial Pivoting, and why is it essential in scientific computing?
+**Answer:**  
+Even if a pivot is non-zero, if its value is very small (e.g. $0.0001$), dividing or scaling by it causes numerical magnification of round-off errors in computer floating-point arithmetic.  
+**Partial Pivoting** is the strategy where, at step $k$, the computer searches down column $k$ for the element with the **largest absolute value** ($|\text{pivot}|$) and swaps that row into the pivot position. Libraries like **NumPy**, **SciPy**, and **LAPACK** implement partial pivoting by default to guarantee numerical stability.
+
+### Q6: How does Row Echelon Form reveal the number of solutions (Rank / Rouché–Capelli Theorem)?
+**Answer:**  
+After reducing $[A \mid b]$ to echelon form:
+1. **Unique Solution:** When $\text{rank}(A) = \text{rank}(A \mid b) = n$ (every column has a pivot). In our $3 \times 3$ example, we have 3 pivots, giving a unique single point of intersection in 3D: $(1, 4, -1)$.
+2. **Inconsistent / No Solution:** When $\text{rank}(A) < \text{rank}(A \mid b)$. This happens if a row reduces to $[0, 0, 0 \mid c]$ with $c \neq 0$, which asserts $0 = c$ (a logical impossibility). Geometrically, this means the planes are parallel or disjoint.
+3. **Infinitely Many Solutions:** When $\text{rank}(A) = \text{rank}(A \mid b) < n$. A row reduces to all zeros $[0, 0, 0 \mid 0]$, meaning there are free variables (degrees of freedom). Geometrically, the planes intersect along a continuous line or plane.
+
+### Q7: What is the difference between Gaussian Elimination (REF) and Gauss-Jordan Elimination (RREF)?
+**Answer:**  
+- **Gaussian Elimination (REF):** Performs forward elimination downwards to create an upper triangular matrix, followed by back-substitution. Its computational cost is approximately $\frac{2}{3}n^3$ flops.
+- **Gauss-Jordan Elimination (RREF):** Continues elimination upwards as well, clearing entries both above and below each pivot and scaling each pivot to $1$. The left side becomes the Identity matrix $[I \mid s]$, reading the solution directly. However, it requires approximately $n^3$ flops (50% more operations).  
+Therefore, Gaussian Elimination is the preferred, efficient industry standard for solving systems, while Gauss-Jordan is preferred for finding matrix inverses ($[A \mid I] \to [I \mid A^{-1}]$).
+
+---
+
+## 📌 Part 3: Step-by-Step Derivation of Your Worked Example
+
+### The Problem:
 $$\begin{cases} 
-x + 2y + z = 8 & \text{(Equation 1)} \\ 
-2x + 5y + 3z = 19 & \text{(Equation 2)} \\ 
-3x + 8y + 6z = 29 & \text{(Equation 3)} 
-\end{cases}$$
-
-### Augmented Matrix Setup:
-$$\left[\begin{array}{ccc|c} 
+x + 2y + z = 8 \\ 
+2x + 5y + 3z = 19 \\ 
+3x + 8y + 6z = 29 
+\end{cases} \implies \left[\begin{array}{ccc|c} 
 1 & 2 & 1 & 8 \\ 
 2 & 5 & 3 & 19 \\ 
 3 & 8 & 6 & 29 
 \end{array}\right]$$
 
-### Step 1: Clear Column 1 Below Pivot 1
-- **Pivot:** Row 1, Column 1 has entry $1$.
-- **Eliminate $(2, 1) = 2$:** Apply $R_2 \to R_2 - 2R_1$.
-  $$R_2 = [2, 5, 3 \mid 19]$$
-  $$-2R_1 = [-2, -4, -2 \mid -16]$$
-  $$\text{New } R_2 = [0, 1, 1 \mid 3]$$
-- **Eliminate $(3, 1) = 3$:** Apply $R_3 \to R_3 - 3R_1$.
-  $$R_3 = [3, 8, 6 \mid 29]$$
-  $$-3R_1 = [-3, -6, -3 \mid -24]$$
-  $$\text{New } R_3 = [0, 2, 3 \mid 5]$$
+### The Row Operations:
+1. **Pivot 1 is at $(1, 1) = 1$:**
+   - Eliminate $(2, 1) = 2$ using $R_2 \to R_2 - 2R_1$:
+     $$[2, 5, 3 \mid 19] - 2[1, 2, 1 \mid 8] = [0, 1, 1 \mid 3]$$
+   - Eliminate $(3, 1) = 3$ using $R_3 \to R_3 - 3R_1$:
+     $$[3, 8, 6 \mid 29] - 3[1, 2, 1 \mid 8] = [0, 2, 3 \mid 5]$$
 
-Intermediate Matrix:
-$$\left[\begin{array}{ccc|c} 
-1 & 2 & 1 & 8 \\ 
-0 & 1 & 1 & 3 \\ 
-0 & 2 & 3 & 5 
-\end{array}\right]$$
+2. **Pivot 2 is at $(2, 2) = 1$:**
+   - Eliminate $(3, 2) = 2$ using $R_3 \to R_3 - 2R_2$:
+     $$[0, 2, 3 \mid 5] - 2[0, 1, 1 \mid 3] = [0, 0, 1 \mid -1]$$
 
-### Step 2: Clear Column 2 Below Pivot 2
-- **Pivot:** Row 2, Column 2 has entry $1$.
-- **Crucial Question: Why use $R_2$ instead of $R_1$?**  
-  **Your Answer:** *"Because $R_2$ already has a zero in the first column! If we used $R_1$, its non-zero first entry would destroy the zero we just worked hard to create in $(3, 1)$."*
-- **Eliminate $(3, 2) = 2$:** Apply $R_3 \to R_3 - 2R_2$.
-  $$R_3 = [0, 2, 3 \mid 5]$$
-  $$-2R_2 = [0, -2, -2 \mid -6]$$
-  $$\text{New } R_3 = [0, 0, 1 \mid -1]$$
+3. **Row Echelon Form Reached:**
+   $$\left[\begin{array}{ccc|c} 1 & 2 & 1 & 8 \\ 0 & 1 & 1 & 3 \\ 0 & 0 & 1 & -1 \end{array}\right]$$
 
-Resulting Row Echelon Form:
-$$\left[\begin{array}{ccc|c} 
-1 & 2 & 1 & 8 \\ 
-0 & 1 & 1 & 3 \\ 
-0 & 0 & 1 & -1 
-\end{array}\right]$$
+4. **Back-Substitution:**
+   - Row 3: $z = -1$
+   - Row 2: $y + (-1) = 3 \implies y = 4$
+   - Row 1: $x + 2(4) + (-1) = 8 \implies x + 7 = 8 \implies x = 1$
 
-### Step 3: Back-Substitution
-- **From Row 3:** $0x + 0y + 1z = -1 \implies \mathbf{z = -1}$.
-- **From Row 2:** $y + z = 3 \implies y + (-1) = 3 \implies \mathbf{y = 4}$.
-- **From Row 1:** $x + 2y + z = 8 \implies x + 2(4) + (-1) = 8 \implies x + 7 = 8 \implies \mathbf{x = 1}$.
-
-### Unique Solution:
-$$\mathbf{x} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 1 \\ 4 \\ -1 \end{bmatrix}$$
-
-### Verification:
-$$\text{Eq 2 check: } 2(1) + 5(4) + 3(-1) = 2 + 20 - 3 = 19 \quad \checkmark$$
-$$\text{Eq 3 check: } 3(1) + 8(4) + 6(-1) = 3 + 32 - 6 = 29 \quad \checkmark$$
-
----
-
-## 📌 Part 3: Geometric & Theoretical Questions
-
-### Q5: What does this solution represent geometrically?
-**Answer:**  
-In $\mathbb{R}^3$, each linear equation represents a 2-dimensional flat plane. A system of 3 equations describes 3 intersecting planes.  
-Because our matrix has rank 3 (3 independent pivots), the 3 planes intersect at **exactly one unique point in space**: $(1, 4, -1)$.
-
-### Q6: When does a system have no solution or infinite solutions?
-**Answer:**  
-- **No Solution (Inconsistent):** If forward elimination produces a row where the coefficient entries are all zero, but the augmented constant is non-zero (i.e., $[0, 0, 0 \mid c]$ with $c \neq 0$), which asserts $0 = c$ (a contradiction). Geometrically, planes are parallel or intersect in disjoint lines.
-- **Infinitely Many Solutions (Consistent with Free Variables):** If a non-contradictory row becomes all zeros $[0, 0, 0 \mid 0]$, meaning there are fewer pivots than variables ($\text{rank}(A) < n$). The unpivoted columns represent free variables (degrees of freedom), corresponding to planes intersecting along a continuous line or plane.
-
-### Q7: What is the computational complexity of Gaussian Elimination?
-**Answer:**  
-For an $n \times n$ system, forward elimination requires approximately $\frac{2}{3}n^3$ floating-point operations (flops), while back-substitution requires $n^2$ flops. Thus, the overall time complexity is $\mathcal{O}(n^3)$. This is vastly superior to calculating determinants via Cramer's rule, which has factorial $\mathcal{O}(n!)$ complexity.
-
----
-
-## 📌 Part 4: Questions About Your Code & Visual Choices
-
-### Q8: What animation library did you use, and how did you structure the code?
-**Answer:**  
-I used **Python 3** and **Manim Community Edition (v0.22.1)**, the programmatic mathematical animation engine developed by 3Blue1Brown and maintained by the open-source community.  
-I structured the project modularly into 6 distinct scene classes corresponding to the required pedagogical storyboard:
-1. `Scene1_HookAndContext`: Opening frame, credentials, and motivating problem.
-2. `Scene2_AugmentedMatrixAndEROs`: Transforming equations to matrix and defining the 3 EROs.
-3. `Scene3_RowEchelonFormAndPivots`: Visualizing the staircase geometry and pivot rules.
-4. `Scene4_WorkedExample`: Live forward elimination with animated scratchpad arithmetic.
-5. `Scene5_BackSubstitution`: Bottom-up substitution and 3D plane intersection.
-6. `Scene6_SummaryAndCredits`: Core takeaways and official submission credits.
-
-### Q9: Why did you choose these specific visual designs and color codes?
-**Answer:**  
-- **Color Consistency:** I used gold (`#FACC15`) specifically for active pivots, coral red (`#F87171`) for target entries being eliminated, and emerald green (`#34D399`) for successful zeros and echelon staircase confirmation.
-- **Cognitive Load Reduction:** Instead of jumping straight to the transformed row, I built an interactive scratchpad on the right that explicitly displays the row arithmetic ($R_2 - 2R_1$). This allows a fellow M3 student to follow the arithmetic step-by-step rather than wondering where numbers came from.
-- **Dark Aesthetic:** The deep slate background (`#0A0F1D`) maximizes contrast and readability at 1080p Full HD.
+### Unique Solution Point:
+$$\mathbf{x} = \begin{bmatrix} 1 \\ 4 \\ -1 \end{bmatrix}$$

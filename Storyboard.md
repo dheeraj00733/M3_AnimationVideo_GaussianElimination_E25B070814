@@ -3,143 +3,110 @@
 **Assessment:** Internal Assessment • Project Option 1: Animation Video (10% Weightage)  
 **Student Name:** Dheeraj  
 **Student ID:** E25B070814  
-**Target Video Duration:** 5 Minutes (~300–315 seconds)  
+**Target Video Duration:** 5 to 6 Minutes (~330–350 seconds)  
 **Format:** 16:9 Landscape, 1080p Full HD MP4  
 
 ---
 
 ## One-Sentence Learning Objective
-> *"By the end of this video, the viewer will be able to represent a system of linear equations as an augmented matrix, systematically apply elementary row operations to transform it into upper triangular row echelon form, and solve for the unique intersection point using back-substitution."*
+> *"By the end of this video, the viewer will be able to represent a system of linear equations as an augmented matrix, systematically apply elementary row operations to transform it into upper triangular row echelon form, handle zero-pivot edge cases via partial pivoting, analyze system rank and solvability, and extract exact solutions using back-substitution."*
 
 ---
 
-## 6-Scene Storyboard Structure
+## 6-Scene Pedagogical Storyboard
 
 ### Scene 1: Hook / Context — The Scaling Crisis of Linear Systems
-- **Timestamp:** `[00:00 – 00:45]` (~45 seconds)
-- **Purpose:** Spark curiosity, present student credentials, and motivate the need for a systematic elimination algorithm over chaotic ad-hoc substitution.
+- **Timestamp:** `[00:00 – 00:38]` (~38 seconds)
+- **Purpose:** Spark curiosity, display student credentials, and motivate the need for a systematic elimination algorithm over chaotic ad-hoc substitution.
 - **Visual Plan:**
-  - **Opening Title Card (00:00–00:15):** A modern dark-navy aesthetic container featuring:
+  - **Opening Title Card (00:00–00:11):** High-contrast dark navy badge (`#0A0F1D`) featuring:
     - Heading: `LINEAR ALGEBRA & CALCULUS (M3)`
     - Subtitle: `Gaussian Elimination: Transforming Systems from Chaos to Echelon Form`
     - Student Identification: `Name: Dheeraj | Student ID: E25B070814`
-    - Assessment Tag: `Internal Assessment (10%) • Project Option 1`
-  - **The Problem Scenario (00:15–00:45):**
-    - A stylized card reveals a 3-variable system:
+    - Assessment Tag: `INTERNAL ASSESSMENT • PROJECT OPTION 1`
+  - **The Problem Scenario (00:11–00:38):**
+    - A stylized card reveals the $3 \times 3$ system of equations:
       $$\begin{cases} x + 2y + z = 8 \\ 2x + 5y + 3z = 19 \\ 3x + 8y + 6z = 29 \end{cases}$$
-    - Red alert text asks: *"Can we solve this by substitution?"*
-    - Visual progression notes that while 2 equations are manageable, 3 equations get cluttered, and systems in computer graphics, machine learning, or GPS satellite tracking have hundreds of variables where substitution fails completely.
-    - Solution reveal: We need an algorithmic, fail-safe roadmap — **Gaussian Elimination**.
-- **Narration Focus:** Welcoming fellow M3 students, framing why linear systems matter, and setting the goal of making matrix algebra visual and intuitive.
-- **Mathematical Notes:** The system has 3 equations in 3 unknowns with a unique point solution $(1, 4, -1)$, verified in advance.
+    - Question reveals: *Can we solve this by substitution?* $\to$ *With 100 equations it's impossible!* $\to$ *We need Gaussian Elimination.*
+- **Narration Focus:** Welcoming the audience, introducing student identity, and motivating the necessity of an algorithmic roadmap.
 
 ---
 
-### Scene 2: Concept Introduction — The Augmented Matrix & Legal Moves
-- **Timestamp:** `[00:45 – 01:35]` (~50 seconds)
-- **Purpose:** Transition from algebraic clutter to compact numerical matrices and define the 3 valid Elementary Row Operations (EROs).
+### Scene 2: Concept Introduction — The Augmented Matrix & The 3 EROs
+- **Timestamp:** `[00:38 – 01:19]` (~41 seconds)
+- **Purpose:** Strip variable clutter into compact numerical matrices and define the 3 valid Elementary Row Operations (EROs).
 - **Visual Plan:**
-  - **Stripping Variables (00:45–01:05):**
-    - Side-by-side transition: Equations on the left transform into an Augmented Matrix $[A \mid b]$ on the right.
-    - Column headers $x, y, z$ and the constant column $b$ are highlighted.
-    - Emphasize that the symbols $x, y, z$ are just placeholders; all mathematical power resides in the coefficients and constants.
-  - **The 3 Elementary Row Operations (01:05–01:35):**
-    - Three sleek info cards animate sequentially:
-      1. **Row Swap ($R_i \leftrightarrow R_j$):** Reordering equations does not alter their shared intersection.
-      2. **Scalar Multiplication ($k \cdot R_i \to R_i, k \neq 0$):** Scaling an entire equation preserves equality balance.
-      3. **Row Addition / Elimination ($R_i + k \cdot R_j \to R_i$):** Adding a scaled equation to another cancels targeted variables while preserving the solution set.
-- **Narration Focus:** Explaining that EROs are truth-preserving transformations — the equations look different, but the geometry of the solution never changes.
-- **Mathematical Notes:** Formally define $[A \mid b] \in \mathbb{R}^{3 \times 4}$. Explain row equivalence ($\sim$).
+  - **Stripping Variables (00:38–00:54):** Equations morph into the Augmented Matrix $[A \mid b]$. Column labels $x, y, z$ and constant vector $b$ are indicated.
+  - **The 3 ERO Cards (00:54–01:19):**
+    1. **Row Swap ($R_i \leftrightarrow R_j$):** Equation reordering preserves solutions.
+    2. **Scalar Multiplication ($k \cdot R_i \to R_i, k \neq 0$):** Uniform scaling preserves balance.
+    3. **Row Addition ($R_i + k \cdot R_j \to R_i$):** Target elimination weapon.
+- **Narration Focus:** Establishing row equivalence and explaining why EROs never alter the underlying solution geometry.
 
 ---
 
-### Scene 3: Visual Intuition — The Destination: Row Echelon Form (REF) & Pivots
-- **Timestamp:** `[01:35 – 02:25]` (~50 seconds)
-- **Purpose:** Build geometric and structural intuition for *why* we eliminate variables before calculating arithmetic.
+### Scene 3: Visual Intuition — Row Echelon Form, Pivots & Partial Pivoting
+- **Timestamp:** `[01:19 – 02:02]` (~43 seconds)
+- **Purpose:** Build structural intuition for the Upper Triangular Staircase, define pivots, and resolve zero-pivot edge cases.
 - **Visual Plan:**
-  - **The Upper Triangular Staircase (01:35–02:00):**
-    - Display an abstract matrix:
-      $$\left[\begin{array}{ccc|c} P_1 & * & * & d_1 \\ 0 & P_2 & * & d_2 \\ 0 & 0 & P_3 & d_3 \end{array}\right]$$
-    - A glowing emerald-green staircase line traces beneath each pivot.
-  - **Criteria Breakdown (02:00–02:25):**
-    - **Pivots:** Highlighted in radiant gold boxes. The first non-zero entry from the left in each non-zero row.
-    - **Staircase Step:** Each successive pivot must lie strictly to the right of the pivot above it.
-    - **Zeros Below:** Every entry beneath a pivot must be eliminated to 0.
-    - Visual insight: The bottom row now isolates a single variable ($z$), decoupling the tangled system!
-- **Narration Focus:** Clarifying the strategy: eliminate from left to right, column by column, using pivots to systematically wipe out everything below.
-- **Mathematical Notes:** Contrast general matrices with Row Echelon Form (REF) and mention Reduced Row Echelon Form (RREF) as the optional further step.
+  - **Upper Triangular Staircase (01:19–01:34):** Matrix with diagonal pivots $P_1, P_2, P_3$ and emerald-green staircase line.
+  - **Pivot Criteria & Zeros Below (01:34–01:47):** Pivots highlighted in radiant gold, zeros below in emerald green.
+  - **Zero Pivot Remedy & Partial Pivoting (01:47–02:02):**
+    - *The Problem:* If a diagonal pivot is 0, division by zero occurs.
+    - *The Mathematical Remedy:* Row Swap ($R_i \leftrightarrow R_j$) with a lower non-zero row.
+    - *The Engineering Insight:* In scientific computing (NumPy, LAPACK), algorithms systematically swap for the **largest magnitude pivot** (*Partial Pivoting*) to prevent catastrophic rounding errors.
+- **Narration Focus:** Defining pivots, explaining the staircase, and introducing partial pivoting as the industry gold standard.
 
 ---
 
 ### Scene 4: Worked Example — Step-by-Step Forward Elimination
-- **Timestamp:** `[02:25 – 04:05]` (~100 seconds)
-- **Purpose:** Demonstrate the algorithm in real time on our concrete 3x3 system with intermediate calculations clearly displayed.
+- **Timestamp:** `[02:02 – 03:26]` (~84 seconds)
+- **Purpose:** Demonstrate the algorithm live on the $3 \times 3$ system with animated scratchpad arithmetic.
 - **Visual Plan:**
-  - **Starting Matrix Setup (02:25–02:35):**
-    $$\left[\begin{array}{ccc|c} 1 & 2 & 1 & 8 \\ 2 & 5 & 3 & 19 \\ 3 & 8 & 6 & 29 \end{array}\right]$$
-  - **Step 1: Eliminate Entry (2, 1) using Pivot 1 (02:35–03:05):**
-    - Pivot 1 at $(1, 1) = 1$ glows gold. Target entry $(2, 1) = 2$ glows coral red.
-    - Operation card appears on the right: $R_2 \to R_2 - 2R_1$.
-    - Step-by-step arithmetic displayed:
-      $$R_2 = [2, 5, 3 \mid 19]$$
-      $$-2R_1 = [-2, -4, -2 \mid -16]$$
-      $$\text{New } R_2 = [0, 1, 1 \mid 3]$$
-    - Matrix row 2 morphs smoothly into $[0, 1, 1 \mid 3]$ with the leading 0 in emerald green.
-  - **Step 2: Eliminate Entry (3, 1) using Pivot 1 (03:05–03:35):**
-    - Target entry $(3, 1) = 3$ glows coral red.
-    - Operation card: $R_3 \to R_3 - 3R_1$.
-    - Scratchpad arithmetic:
-      $$R_3 = [3, 8, 6 \mid 29]$$
-      $$-3R_1 = [-3, -6, -3 \mid -24]$$
-      $$\text{New } R_3 = [0, 2, 3 \mid 5]$$
-    - Row 3 morphs into $[0, 2, 3 \mid 5]$.
-    - A banner confirms: *Column 1 below pivot is completely cleared!*
-  - **Step 3: Move to Pivot 2 and Eliminate Entry (3, 2) (03:35–04:05):**
-    - New pivot chosen at $(2, 2) = 1$ (glowing gold). Target below is $(3, 2) = 2$ (coral red).
-    - Operation card: $R_3 \to R_3 - 2R_2$.
-    - Scratchpad arithmetic:
-      $$R_3 = [0, 2, 3 \mid 5]$$
-      $$-2R_2 = [0, -2, -2 \mid -6]$$
-      $$\text{New } R_3 = [0, 0, 1 \mid -1]$$
-    - Row 3 morphs into $[0, 0, 1 \mid -1]$.
-    - Visual celebration: All three pivots $(1, 1, 1)$ light up, and the triangular zeros pulse green. Row Echelon Form achieved!
-- **Narration Focus:** Speaking through the exact arithmetic slowly and methodically so the viewer never has to pause to catch up.
-- **Mathematical Notes:** Show full integer arithmetic to prevent fractional confusion and guarantee algebraic clarity.
+  - **Matrix Setup (02:02–02:11):** Initial augmented matrix on the left.
+  - **Step 1: Eliminate Entry (2, 1) using Pivot 1 (02:11–02:37):**
+    - Pivot 1 $(1, 1) = 1$ (gold); Target $(2, 1) = 2$ (red).
+    - Scratchpad: $R_2 \to R_2 - 2R_1 \implies [0, 1, 1 \mid 3]$. Row 2 updates.
+  - **Step 2: Eliminate Entry (3, 1) using Pivot 1 (02:37–03:01):**
+    - Target $(3, 1) = 3$ (red).
+    - Scratchpad: $R_3 \to R_3 - 3R_1 \implies [0, 2, 3 \mid 5]$. Row 3 updates. Column 1 cleared!
+  - **Step 3: Move to Pivot 2 and Eliminate (3, 2) (03:01–03:19):**
+    - Pivot 2 $(2, 2) = 1$ (gold); Target $(3, 2) = 2$ (red).
+    - Scratchpad: $R_3 \to R_3 - 2R_2 \implies [0, 0, 1 \mid -1]$. Row 3 updates.
+  - **Row Echelon Success (03:19–03:26):** All 3 pivots $(1, 1, 1)$ glow gold; zeros glow green.
+- **Narration Focus:** Guiding the viewer through the arithmetic step-by-step with clear pacing.
 
 ---
 
-### Scene 5: Interpretation — Back-Substitution & Geometric Meaning
-- **Timestamp:** `[04:05 – 04:55]` (~50 seconds)
-- **Purpose:** Harvest the solutions from the echelon matrix and connect the algebra back to 3D geometry.
+### Scene 5: Interpretation — Back-Substitution, 3D Geometry & Rank Analysis
+- **Timestamp:** `[03:26 – 04:31]` (~65 seconds)
+- **Purpose:** Harvest the solutions, interpret 3D plane intersections, and explain how echelon form diagnoses system solvability (Rank).
 - **Visual Plan:**
-  - **Unwinding the Equations (04:05–04:35):**
-    - Row 3 reveals: $0x + 0y + 1z = -1 \implies \mathbf{z = -1}$.
-    - Row 2: $1y + 1(-1) = 3 \implies y - 1 = 3 \implies \mathbf{y = 4}$.
-    - Row 1: $1x + 2(4) + 1(-1) = 8 \implies x + 8 - 1 = 8 \implies \mathbf{x = 1}$.
-  - **Geometric Interpretation Box (04:35–04:55):**
-    - Large emerald banner displays the solution vector:
-      $$\mathbf{x} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 1 \\ 4 \\ -1 \end{bmatrix}$$
-    - Explanation diagram showing that each linear equation represents a plane in $\mathbb{R}^3$, and Gaussian elimination found their unique, common point of intersection!
-    - Verification check: $2(1) + 5(4) + 3(-1) = 2 + 20 - 3 = 19$ (Check mark!).
-- **Narration Focus:** Emphasizing why echelon form makes back-substitution almost effortless, and reinforcing the geometric perspective.
-- **Mathematical Notes:** Clarify that 3 non-parallel planes with full rank ($3$ pivots) intersect at a single point (unique solution).
+  - **Back-Substitution (03:26–03:52):**
+    - Row 3: $z = -1$.
+    - Row 2: $y + (-1) = 3 \implies y = 4$.
+    - Row 1: $x + 2(4) - 1 = 8 \implies x = 1$.
+  - **3D Plane Intersection (03:52–04:08):** Solution vector $(x, y, z) = (1, 4, -1)$ shown as the unique intersection point of 3 non-parallel planes.
+  - **System Structure & The 3 Outcomes (04:08–04:31):**
+    1. *Unique Solution:* Full rank ($\text{rank} = 3$). Exactly 1 intersection point.
+    2. *Inconsistent (No Solution):* Row like $[0, 0, 0 \mid 5]$ ($0 = 5$, contradiction). Parallel planes.
+    3. *Infinite Solutions:* Zero row $[0, 0, 0 \mid 0]$ with free variables. Planes intersecting along a line.
+- **Narration Focus:** Connecting echelon form directly to linear system classification (Rouché–Capelli theorem).
 
 ---
 
-### Scene 6: Summary & Credits — Takeaways & Submission Verification
-- **Timestamp:** `[04:55 – 05:30]` (~35 seconds)
-- **Purpose:** Reinforce the three foundational concepts and fulfill official submission requirements (student info, disclosures, tool attribution).
+### Scene 6: Summary & Credits — Takeaways, REF vs RREF & Disclosures
+- **Timestamp:** `[04:31 – 05:30]` (~59 seconds)
+- **Purpose:** Summarize core lessons, contrast REF with Reduced Row Echelon Form (RREF / Gauss-Jordan), and display official credits.
 - **Visual Plan:**
-  - **Core Takeaways Card (04:55–05:15):**
-    1. *Augmented Matrix:* Condenses systems of linear equations into clean numerical arrays.
-    2. *Pivots & Forward Elimination:* Wipes out variables below pivots into an upper triangular staircase.
-    3. *Back-Substitution:* Rapidly extracts solutions from bottom to top once decoupled.
-  - **Closing Submission Frame (05:15–05:30):**
+  - **3 Core Takeaways (04:31–04:55):** Augmented Matrix, Pivot Elimination, Back-Substitution.
+  - **Algorithmic Horizon: REF vs RREF (04:55–05:14):**
+    - *REF:* Upper triangular, fast ($\sim \frac{2}{3}n^3$ operations), ideal for solving systems.
+    - *RREF (Gauss-Jordan):* Clears above pivots too into $[I \mid s]$, ideal for matrix inversion.
+  - **Submission Closing Frame (05:14–05:30):**
     - Title: `PROJECT SUBMISSION & CREDITS`
-    - Course: `Linear Algebra and Calculus (M3) • Internal Assessment`
-    - Student: `Dheeraj (Student ID: E25B070814)`
-    - Topic: `Gaussian Elimination & Row Echelon Form`
-    - Software & Tools: `Python 3.15, Manim Community Edition v0.22.1, FFmpeg`
-    - AI Disclosure: `Script structuring, storyboard templating, and animation code developed with Antigravity AI assistance.`
-    - Closing note: `Thank you for watching!`
-- **Narration Focus:** Wrapping up with confidence, encouraging viewers to practice row operations, and concluding the presentation.
+    - Student: `Dheeraj | Student ID: E25B070814`
+    - Course: `Linear Algebra and Calculus (M3)`
+    - Tools: `Python 3, Manim Community v0.22.1, FFmpeg`
+    - AI Disclosure: `Developed with Antigravity AI assistance.`
+- **Narration Focus:** Concluding with confidence and thanking the evaluator.

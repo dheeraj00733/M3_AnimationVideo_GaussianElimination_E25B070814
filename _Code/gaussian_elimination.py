@@ -309,12 +309,33 @@ class Scene3_RowEchelonFormAndPivots(Scene):
         self.play(Create(z1_box), Create(z2_box), Create(z3_box), run_time=1.2)
         self.wait(6.5)  # Voiceover: Once these 3 zeros are created, back-substitution is trivial
         
+        # Transition to Special Insight: What if a Pivot is Zero? (Partial Pivoting)
         self.play(
-            FadeOut(header), FadeOut(sub), FadeOut(t_mob), FadeOut(staircase),
-            FadeOut(info_card), FadeOut(p1_box), FadeOut(p2_box), FadeOut(p3_box),
+            FadeOut(t_mob), FadeOut(staircase), FadeOut(info_card),
+            FadeOut(p1_box), FadeOut(p2_box), FadeOut(p3_box),
             FadeOut(z1_box), FadeOut(z2_box), FadeOut(z3_box),
+            FadeOut(sub),
             run_time=0.8
         )
+        
+        sub_pivot = Text("Crucial Insight: What if a Pivot is Zero? (Row Swaps & Partial Pivoting)", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
+        sub_pivot.next_to(header, DOWN, buff=0.25)
+        self.play(Write(sub_pivot))
+        
+        piv_card = RoundedRectangle(corner_radius=0.15, width=9.2, height=3.2, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        
+        piv_t1 = Text("Problem: If the pivot position has a 0, we cannot divide by 0 or eliminate below!", font=FONT_FAMILY, font_size=16, color=COLOR_TARGET, weight=BOLD)
+        piv_t2 = Text("Mathematical Remedy: Swap rows (Ri <---> Rj) with a non-zero row below.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
+        piv_t3 = Text("Engineering Insight (Partial Pivoting):", font=FONT_FAMILY, font_size=16, color=COLOR_TITLE, weight=BOLD)
+        piv_t4 = Text("In scientific computing (NumPy, MATLAB), computers always swap rows to select the\nLARGEST magnitude pivot. This minimizes rounding errors and avoids numerical instability!", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT, line_spacing=0.8)
+        
+        piv_content = VGroup(piv_t1, piv_t2, piv_t3, piv_t4).arrange(DOWN, buff=0.25, aligned_edge=LEFT).move_to(piv_card.get_center())
+        piv_group = VGroup(piv_card, piv_content).shift(DOWN * 0.4)
+        
+        self.play(FadeIn(piv_group), run_time=1.0)
+        self.wait(8.5)  # Voiceover: Explaining row swap when pivot is 0 and partial pivoting for numerical stability
+        
+        self.play(FadeOut(header), FadeOut(sub_pivot), FadeOut(piv_group), run_time=0.8)
 
 
 class Scene4_WorkedExample(Scene):
@@ -560,9 +581,43 @@ class Scene5_BackSubstitution(Scene):
         sol_group = VGroup(sol_box, sol_content).shift(DOWN * 0.3)
         
         self.play(FadeIn(sol_group), run_time=1.2)
-        self.wait(10.0)  # Voiceover: Explaining the unique intersection of planes and quick verification
+        self.wait(8.0)  # Voiceover: Explaining the unique intersection of planes and quick verification
         
-        self.play(FadeOut(header), FadeOut(sub), FadeOut(sol_group), run_time=0.8)
+        self.play(FadeOut(sol_group), FadeOut(sub), run_time=0.8)
+        
+        # New High-Value Topic: System Structure & Rank (The 3 Outcomes)
+        rank_banner = Text("Theoretical Depth: What Echelon Form Tells Us About Any System", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
+        rank_banner.next_to(header, DOWN, buff=0.25)
+        self.play(Write(rank_banner))
+        
+        c1_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#10B981", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c1_title = Text("1. Unique Solution (Our Case):", font=FONT_FAMILY, font_size=16, color=COLOR_SUCCESS, weight=BOLD)
+        c1_desc  = Text("Pivots in all 3 columns. Rank = 3. Planes intersect at exactly one point: (1, 4, -1).", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c1_vg = VGroup(c1_title, c1_desc).arrange(RIGHT, buff=0.3).move_to(c1_box.get_center())
+        card_c1 = VGroup(c1_box, c1_vg)
+        
+        c2_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#EF4444", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c2_title = Text("2. Inconsistent (No Solution):", font=FONT_FAMILY, font_size=16, color=COLOR_TARGET, weight=BOLD)
+        c2_desc  = Text("A row like [ 0  0  0 | 5 ] implies 0 = 5 (contradiction!). Planes are parallel.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c2_vg = VGroup(c2_title, c2_desc).arrange(RIGHT, buff=0.3).move_to(c2_box.get_center())
+        card_c2 = VGroup(c2_box, c2_vg)
+        
+        c3_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c3_title = Text("3. Infinite Solutions:", font=FONT_FAMILY, font_size=16, color=COLOR_TITLE, weight=BOLD)
+        c3_desc  = Text("A zero row [ 0  0  0 | 0 ] leaves free variables. Planes intersect along a line.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c3_vg = VGroup(c3_title, c3_desc).arrange(RIGHT, buff=0.3).move_to(c3_box.get_center())
+        card_c3 = VGroup(c3_box, c3_vg)
+        
+        cards_cases = VGroup(card_c1, card_c2, card_c3).arrange(DOWN, buff=0.25).shift(DOWN * 0.4)
+        
+        self.play(FadeIn(card_c1), run_time=0.8)
+        self.wait(4.0)
+        self.play(FadeIn(card_c2), run_time=0.8)
+        self.wait(4.5)
+        self.play(FadeIn(card_c3), run_time=0.8)
+        self.wait(6.0)  # Voiceover: Explaining the 3 possible outcomes of linear systems revealed by echelon form
+        
+        self.play(FadeOut(header), FadeOut(rank_banner), FadeOut(cards_cases), run_time=0.8)
 
 
 class Scene6_SummaryAndCredits(Scene):
@@ -599,6 +654,25 @@ class Scene6_SummaryAndCredits(Scene):
         self.wait(7.0)  # Voiceover: Summarizing the 3 key pillars of Gaussian Elimination
         
         self.play(FadeOut(t_header), FadeOut(cards), run_time=0.8)
+        
+        # Extension Insight: REF vs RREF (Gauss-Jordan Elimination)
+        rref_header = Text("Algorithmic Horizon: REF vs. Reduced Row Echelon Form (RREF)", font=FONT_FAMILY, font_size=20, color=COLOR_ACCENT, weight=BOLD).to_edge(UP, buff=0.6)
+        self.play(Write(rref_header))
+        
+        rref_box = RoundedRectangle(corner_radius=0.15, width=9.4, height=3.2, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        
+        rref_p1 = Text("• Gaussian Elimination stops at REF (Upper Triangular) + Back-Substitution.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
+        rref_p2 = Text("• Gauss-Jordan Elimination continues upwards, eliminating entries ABOVE pivots.", font=FONT_FAMILY, font_size=15, color=COLOR_TITLE)
+        rref_p3 = Text("• The augmented matrix transforms into [ I | x ], revealing the exact solution directly!", font=FONT_FAMILY, font_size=15, color=COLOR_SUCCESS, weight=BOLD)
+        rref_p4 = Text("• Computational Efficiency: Gaussian elimination takes ~2/3 n^3 operations (faster),\n  making it the preferred industry standard for large numerical systems.", font=FONT_FAMILY, font_size=13, color=COLOR_SUBTEXT, line_spacing=0.8)
+        
+        rref_vg = VGroup(rref_p1, rref_p2, rref_p3, rref_p4).arrange(DOWN, buff=0.22, aligned_edge=LEFT).move_to(rref_box.get_center())
+        rref_group = VGroup(rref_box, rref_vg).shift(DOWN * 0.4)
+        
+        self.play(FadeIn(rref_group), run_time=1.0)
+        self.wait(8.5)  # Voiceover: Explaining the difference between REF and RREF and computational efficiency
+        
+        self.play(FadeOut(rref_header), FadeOut(rref_group), run_time=0.8)
         
         # 2. Closing Frame & Project Credits
         cred_badge = RoundedRectangle(corner_radius=0.15, width=9.6, height=5.2, color=COLOR_TITLE, stroke_width=2, fill_color=COLOR_BOX_BG, fill_opacity=0.7)

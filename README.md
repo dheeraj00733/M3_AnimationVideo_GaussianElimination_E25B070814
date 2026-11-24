@@ -4,6 +4,7 @@
 ![Assessment](https://img.shields.io/badge/Assessment-M3%20Internal%20(10%25)-blue)
 ![Topic](https://img.shields.io/badge/Topic-Gaussian%20Elimination-yellow)
 ![Resolution](https://img.shields.io/badge/Video-1080p%2016%3A9%20MP4-green)
+![Duration](https://img.shields.io/badge/Duration-05%3A11%20(5--6%20min)-brightgreen)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
 ### Student & Project Credentials
@@ -11,7 +12,7 @@
 - **Student ID:** E25B070814
 - **Course:** Linear Algebra and Calculus (M3)
 - **Submission Requirement:** Public GitHub Repository with Rendered Video, Source Code, and Storyboard
-- **Video Duration:** 04:29 (4 minutes, 29 seconds) — Target: 5 minutes (strictly max 7 minutes)
+- **Video Duration:** **05:11 (5 minutes, 11 seconds)** — Perfectly within the **5 to 6 minute** window (strictly below 7 minutes).
 
 ---
 
@@ -19,10 +20,10 @@
 This project presents an animated instructional video that teaches **Gaussian Elimination and Row Echelon Form (REF)** from first principles. Rather than simply presenting static definitions or final formulas, the video guides the viewer through:
 1. **The Motivation:** Why ad-hoc algebraic substitution fails as linear systems scale in science and engineering.
 2. **The Representation:** Compacting equations into an Augmented Matrix $[A \mid b]$ and establishing the 3 Elementary Row Operations (EROs).
-3. **The Target Structure:** Understanding the Upper Triangular Staircase of Row Echelon Form and the role of Pivots.
+3. **The Target Structure & Numerical Stability:** Understanding the Upper Triangular Staircase of Row Echelon Form, the role of Pivots, handling zero pivots, and **Partial Pivoting**.
 4. **Step-by-Step Forward Elimination:** Animating exact scratchpad arithmetic for a concrete $3 \times 3$ system until echelon form is achieved.
-5. **Back-Substitution & Geometry:** Unwinding the decoupled matrix into exact solutions $(x, y, z) = (1, 4, -1)$ and interpreting them as intersecting 3D planes.
-6. **Key Takeaways & Credits:** Reinforcing the 3 core principles.
+5. **Back-Substitution, 3D Geometry & Rank Analysis:** Unwinding the decoupled matrix into exact solutions $(x, y, z) = (1, 4, -1)$, interpreting them as intersecting 3D planes, and classifying system solvability (Unique vs. Inconsistent vs. Infinite Solutions).
+6. **Key Takeaways & Algorithmic Horizons:** Contrasting Gaussian Elimination (REF) with Gauss-Jordan (RREF) and computational efficiency ($\sim \frac{2}{3}n^3$).
 
 ---
 
@@ -30,7 +31,7 @@ This project presents an animated instructional video that teaches **Gaussian El
 ```
 M3_AnimationVideo_GaussianElimination_E25B070814/
 │
-├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (04:29 duration)
+├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (05:11 duration)
 │
 ├── Storyboard.md                # Official 6-Scene Storyboard with visual & math plan
 ├── Voiceover_Script.md          # Second-by-second synchronized narration script
@@ -50,10 +51,10 @@ M3_AnimationVideo_GaussianElimination_E25B070814/
 | :---: | :--- | :---: | :--- |
 | **Scene 1** | **Opening Title & Problem Hook** | `00:00 - 00:37` | Introduces Dheeraj (ID: E25B070814) and illustrates why substitution fails for large systems. |
 | **Scene 2** | **Augmented Matrix & 3 EROs** | `00:37 - 01:18` | Strips variable clutter into $[A \mid b]$ and establishes valid row operations. |
-| **Scene 3** | **Row Echelon Form & Pivots** | `01:18 - 01:49` | Visualizes the upper triangular staircase and pivot rules. |
-| **Scene 4** | **Step-by-Step Forward Elimination** | `01:49 - 03:14` | Walks through $R_2 - 2R_1$, $R_3 - 3R_1$, and $R_3 - 2R_2$ with live scratchpad calculations. |
-| **Scene 5** | **Back-Substitution & Geometry** | `03:14 - 03:54` | Solves $z = -1, y = 4, x = 1$ and demonstrates 3D plane intersection. |
-| **Scene 6** | **Summary & Submission Credits** | `03:54 - 04:29` | Recaps 3 key takeaways and displays official student submission credentials. |
+| **Scene 3** | **Row Echelon Form, Pivots & Partial Pivoting** | `01:18 - 02:02` | Visualizes the staircase, defines pivots, handles zero pivots, and introduces **Partial Pivoting** for numerical stability. |
+| **Scene 4** | **Step-by-Step Forward Elimination** | `02:02 - 03:26` | Walks through $R_2 - 2R_1$, $R_3 - 3R_1$, and $R_3 - 2R_2$ with live scratchpad calculations. |
+| **Scene 5** | **Back-Substitution, Geometry & Rank Analysis** | `03:26 - 04:24` | Solves $z = -1, y = 4, x = 1$, explains 3D plane intersection, and diagnoses system solvability (Unique, Inconsistent, Infinite). |
+| **Scene 6** | **Summary, REF vs RREF & Credits** | `04:24 - 05:11` | Recaps 3 key takeaways, contrasts REF with Reduced Row Echelon Form (Gauss-Jordan), and displays official student submission credentials. |
 
 ---
 
