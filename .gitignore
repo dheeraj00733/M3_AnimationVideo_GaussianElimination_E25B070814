@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+media/
 _Code/media/
 Viva_QA_Preparation.md
 dheeraj_voiceover.m4a
