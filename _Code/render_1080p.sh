@@ -42,8 +42,23 @@ file 'Scene5_BackSubstitution.mp4'
 file 'Scene6_SummaryAndCredits.mp4'
 EOF
 
-echo ">>> Concatenating into final 1080p MP4..."
-$FFMPEG_BIN -y -f concat -safe 0 -i "$VIDEO_DIR/concat_list.txt" -c copy "$ROOT_DIR/_Video.mp4"
+echo ">>> Concatenating scenes into seamless video stream..."
+$FFMPEG_BIN -y -f concat -safe 0 -i "$VIDEO_DIR/concat_list.txt" \
+    -c:v libx264 -preset fast -crf 18 -pix_fmt yuv420p \
+    "$ROOT_DIR/_Video_visual.mp4"
+
+if [ -f "$ROOT_DIR/dheeraj_voiceover.m4a" ]; then
+    echo ">>> Merging Dheeraj's voiceover audio with video..."
+    $FFMPEG_BIN -y -i "$ROOT_DIR/_Video_visual.mp4" -i "$ROOT_DIR/dheeraj_voiceover.m4a" \
+        -c:v copy \
+        -af "volume=6.0dB" \
+        -c:a aac -b:a 192k \
+        -shortest \
+        "$ROOT_DIR/_Video.mp4"
+    rm -f "$ROOT_DIR/_Video_visual.mp4"
+else
+    mv "$ROOT_DIR/_Video_visual.mp4" "$ROOT_DIR/_Video.mp4"
+fi
 
 echo "=================================================="
 echo "SUCCESS! Render complete: $ROOT_DIR/_Video.mp4"

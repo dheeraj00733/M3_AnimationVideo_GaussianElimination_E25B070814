@@ -125,7 +125,7 @@ class Scene1_HookAndContext(Scene):
         ).arrange(DOWN, buff=0.25).move_to(ORIGIN)
         
         self.play(FadeIn(badge), FadeIn(title_group), run_time=1.5)
-        self.wait(8.0)  # Voiceover: Intro & Opening details (Dheeraj, ID: E25B070814)
+        self.wait(10.5)  # Voiceover: Intro & Opening details (Dheeraj, ID: E25B070814)
         
         self.play(FadeOut(badge), FadeOut(title_group), run_time=1.0)
         
@@ -141,7 +141,7 @@ class Scene1_HookAndContext(Scene):
         eq_group = VGroup(eq_box, equations).shift(UP * 0.2)
         
         self.play(FadeIn(eq_group), run_time=1.2)
-        self.wait(5.0)  # Voiceover: Here is a 3x3 system of linear equations
+        self.wait(8.0)  # Voiceover: Here is a 3x3 system of linear equations
         
         q1 = Text("Can we solve this by substitution?", font=FONT_FAMILY, font_size=22, color=COLOR_TARGET)
         q2 = Text("With 3 equations it's messy. With 100 equations it's impossible!", font=FONT_FAMILY, font_size=20, color=COLOR_SUBTEXT)
@@ -150,11 +150,11 @@ class Scene1_HookAndContext(Scene):
         qs = VGroup(q1, q2, q3).arrange(DOWN, buff=0.22).next_to(eq_group, DOWN, buff=0.45)
         
         self.play(FadeIn(q1))
-        self.wait(4.0)
+        self.wait(5.5)
         self.play(FadeIn(q2))
-        self.wait(5.0)
+        self.wait(7.0)
         self.play(FadeIn(q3))
-        self.wait(6.0)
+        self.wait(9.0)
         
         self.play(FadeOut(hook_header), FadeOut(eq_group), FadeOut(qs), run_time=1.0)
 
@@ -196,9 +196,9 @@ class Scene2_AugmentedMatrixAndEROs(Scene):
         )
         
         self.play(FadeIn(left_side), run_time=1.0)
-        self.wait(3.0)
+        self.wait(4.0)
         self.play(GrowArrow(arrow), FadeIn(mat_mob), FadeIn(col_headers), run_time=1.2)
-        self.wait(7.0)  # Voiceover: Coefficients on the left, constants on the right
+        self.wait(13.0)  # Voiceover: Coefficients on the left, constants on the right
         
         self.play(FadeOut(left_side), FadeOut(arrow), FadeOut(mat_mob), FadeOut(col_headers), FadeOut(intro_txt), run_time=0.8)
         
@@ -207,35 +207,43 @@ class Scene2_AugmentedMatrixAndEROs(Scene):
         ero_title.next_to(header, DOWN, buff=0.4)
         self.play(Write(ero_title))
         
-        card1 = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.8)
-        ero1_num = Text("1. Row Swap", font=FONT_FAMILY, font_size=20, color=COLOR_TITLE, weight=BOLD)
-        ero1_sym = Text("Ri  <--->  Rj", font=FONT_FAMILY, font_size=20, color=COLOR_ACCENT, weight=BOLD)
-        ero1_desc = Text("Reordering equations does not change the intersection point.", font=FONT_FAMILY, font_size=16, color=COLOR_TEXT)
-        card1_content = VGroup(ero1_num, ero1_sym, ero1_desc).arrange(RIGHT, buff=0.45).move_to(card1.get_center())
+        card_w, card_h = 10.5, 1.22
+        
+        card1 = RoundedRectangle(corner_radius=0.15, width=card_w, height=card_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        ero1_top = VGroup(
+            Text("1. Row Swap:", font=FONT_FAMILY, font_size=18, color=COLOR_TITLE, weight=BOLD),
+            Text("Ri  <--->  Rj", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
+        ).arrange(RIGHT, buff=0.35)
+        ero1_desc = Text("Reordering equations does not change the intersection point.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
+        card1_content = VGroup(ero1_top, ero1_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(card1.get_center())
         ero1_group = VGroup(card1, card1_content)
         
-        card2 = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.8)
-        ero2_num = Text("2. Scalar Scale", font=FONT_FAMILY, font_size=20, color=COLOR_TITLE, weight=BOLD)
-        ero2_sym = Text("k * Ri  --->  Ri  (k != 0)", font=FONT_FAMILY, font_size=20, color=COLOR_ACCENT, weight=BOLD)
-        ero2_desc = Text("Multiplying both sides by a non-zero constant preserves balance.", font=FONT_FAMILY, font_size=16, color=COLOR_TEXT)
-        card2_content = VGroup(ero2_num, ero2_sym, ero2_desc).arrange(RIGHT, buff=0.35).move_to(card2.get_center())
+        card2 = RoundedRectangle(corner_radius=0.15, width=card_w, height=card_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        ero2_top = VGroup(
+            Text("2. Scalar Scale:", font=FONT_FAMILY, font_size=18, color=COLOR_TITLE, weight=BOLD),
+            Text("k * Ri  --->  Ri  (k != 0)", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
+        ).arrange(RIGHT, buff=0.35)
+        ero2_desc = Text("Multiplying both sides by a non-zero constant preserves balance.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
+        card2_content = VGroup(ero2_top, ero2_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(card2.get_center())
         ero2_group = VGroup(card2, card2_content)
         
-        card3 = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.8)
-        ero3_num = Text("3. Row Addition", font=FONT_FAMILY, font_size=20, color=COLOR_TITLE, weight=BOLD)
-        ero3_sym = Text("Ri + k * Rj  --->  Ri", font=FONT_FAMILY, font_size=20, color=COLOR_ACCENT, weight=BOLD)
-        ero3_desc = Text("Adding a multiple of one row to another cancels target variables!", font=FONT_FAMILY, font_size=16, color=COLOR_TEXT)
-        card3_content = VGroup(ero3_num, ero3_sym, ero3_desc).arrange(RIGHT, buff=0.3).move_to(card3.get_center())
+        card3 = RoundedRectangle(corner_radius=0.15, width=card_w, height=card_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        ero3_top = VGroup(
+            Text("3. Row Addition:", font=FONT_FAMILY, font_size=18, color=COLOR_TITLE, weight=BOLD),
+            Text("Ri + k * Rj  --->  Ri", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
+        ).arrange(RIGHT, buff=0.35)
+        ero3_desc = Text("Adding a multiple of one row to another cancels target variables!", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
+        card3_content = VGroup(ero3_top, ero3_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(card3.get_center())
         ero3_group = VGroup(card3, card3_content)
         
-        cards = VGroup(ero1_group, ero2_group, ero3_group).arrange(DOWN, buff=0.3).shift(DOWN * 0.4)
+        cards = VGroup(ero1_group, ero2_group, ero3_group).arrange(DOWN, buff=0.25).shift(DOWN * 0.45)
         
         self.play(FadeIn(ero1_group), run_time=0.8)
-        self.wait(6.0)
+        self.wait(7.0)
         self.play(FadeIn(ero2_group), run_time=0.8)
-        self.wait(6.0)
+        self.wait(7.0)
         self.play(FadeIn(ero3_group), run_time=0.8)
-        self.wait(8.0)  # Voiceover: Explaining why row operations keep the exact same solution
+        self.wait(10.0)  # Voiceover: Explaining why row operations keep the exact same solution
         
         self.play(FadeOut(header), FadeOut(ero_title), FadeOut(cards), run_time=0.8)
 
@@ -299,7 +307,7 @@ class Scene3_RowEchelonFormAndPivots(Scene):
         p3_box = SurroundingRectangle(t_cells[2][2], color=COLOR_ACCENT, buff=0.12, stroke_width=3)
         
         self.play(Create(p1_box), Create(p2_box), Create(p3_box), run_time=1.2)
-        self.wait(6.0)  # Voiceover: Highlighting pivots and why upper triangular structure decouples variables
+        self.wait(10.0)  # Voiceover: Highlighting pivots and why upper triangular structure decouples variables
         
         # Highlight zeros
         z1_box = SurroundingRectangle(t_cells[1][0], color=COLOR_SUCCESS, buff=0.12, stroke_width=3)
@@ -307,7 +315,7 @@ class Scene3_RowEchelonFormAndPivots(Scene):
         z3_box = SurroundingRectangle(t_cells[2][1], color=COLOR_SUCCESS, buff=0.12, stroke_width=3)
         
         self.play(Create(z1_box), Create(z2_box), Create(z3_box), run_time=1.2)
-        self.wait(6.5)  # Voiceover: Once these 3 zeros are created, back-substitution is trivial
+        self.wait(10.5)  # Voiceover: Once these 3 zeros are created, back-substitution is trivial
         
         # Transition to Special Insight: What if a Pivot is Zero? (Partial Pivoting)
         self.play(
@@ -322,18 +330,18 @@ class Scene3_RowEchelonFormAndPivots(Scene):
         sub_pivot.next_to(header, DOWN, buff=0.25)
         self.play(Write(sub_pivot))
         
-        piv_card = RoundedRectangle(corner_radius=0.15, width=9.2, height=3.2, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        piv_card = RoundedRectangle(corner_radius=0.15, width=10.5, height=3.3, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
         
-        piv_t1 = Text("Problem: If the pivot position has a 0, we cannot divide by 0 or eliminate below!", font=FONT_FAMILY, font_size=16, color=COLOR_TARGET, weight=BOLD)
-        piv_t2 = Text("Mathematical Remedy: Swap rows (Ri <---> Rj) with a non-zero row below.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
-        piv_t3 = Text("Engineering Insight (Partial Pivoting):", font=FONT_FAMILY, font_size=16, color=COLOR_TITLE, weight=BOLD)
-        piv_t4 = Text("In scientific computing (NumPy, MATLAB), computers always swap rows to select the\nLARGEST magnitude pivot. This minimizes rounding errors and avoids numerical instability!", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT, line_spacing=0.8)
+        piv_t1 = Text("Problem: If the pivot position has a 0, we cannot divide by 0 or eliminate below!", font=FONT_FAMILY, font_size=15, color=COLOR_TARGET, weight=BOLD)
+        piv_t2 = Text("Mathematical Remedy: Swap rows (Ri <---> Rj) with a non-zero row below.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        piv_t3 = Text("Engineering Insight (Partial Pivoting):", font=FONT_FAMILY, font_size=15, color=COLOR_TITLE, weight=BOLD)
+        piv_t4 = Text("In scientific computing (NumPy, MATLAB), computers always swap rows to select the\nLARGEST magnitude pivot. This minimizes rounding errors and avoids numerical instability!", font=FONT_FAMILY, font_size=13.5, color=COLOR_TEXT, line_spacing=0.8)
         
-        piv_content = VGroup(piv_t1, piv_t2, piv_t3, piv_t4).arrange(DOWN, buff=0.25, aligned_edge=LEFT).move_to(piv_card.get_center())
+        piv_content = VGroup(piv_t1, piv_t2, piv_t3, piv_t4).arrange(DOWN, buff=0.22, aligned_edge=LEFT).move_to(piv_card.get_center())
         piv_group = VGroup(piv_card, piv_content).shift(DOWN * 0.4)
         
         self.play(FadeIn(piv_group), run_time=1.0)
-        self.wait(8.5)  # Voiceover: Explaining row swap when pivot is 0 and partial pivoting for numerical stability
+        self.wait(17.0)  # Voiceover: Explaining row swap when pivot is 0 and partial pivoting for numerical stability
         
         self.play(FadeOut(header), FadeOut(sub_pivot), FadeOut(piv_group), run_time=0.8)
 
@@ -387,7 +395,7 @@ class Scene4_WorkedExample(Scene):
         card1 = VGroup(scratch_box, scratch_group).shift(RIGHT * 3.3 + DOWN * 0.2)
         
         self.play(FadeIn(card1), run_time=1.0)
-        self.wait(8.0)  # Voiceover: Explaining R2 - 2R1 gives [0, 1, 1 | 3]
+        self.wait(9.0)  # Voiceover: Explaining R2 - 2R1 gives [0, 1, 1 | 3]
         
         # Update Matrix Row 2
         new_r2_vals = ["0", "1", "1", " 3"]
@@ -422,7 +430,7 @@ class Scene4_WorkedExample(Scene):
         card2 = VGroup(scratch_box, scratch2_group).shift(RIGHT * 3.3 + DOWN * 0.2)
         
         self.play(FadeIn(card2), run_time=1.0)
-        self.wait(8.0)  # Voiceover: Explaining R3 - 3R1 gives [0, 2, 3 | 5]
+        self.wait(9.0)  # Voiceover: Explaining R3 - 3R1 gives [0, 2, 3 | 5]
         
         # Update Matrix Row 3
         new_r3_vals = ["0", "2", "3", " 5"]
@@ -469,7 +477,7 @@ class Scene4_WorkedExample(Scene):
         card3 = VGroup(scratch_box, scratch3_group).shift(RIGHT * 3.3 + DOWN * 0.2)
         
         self.play(FadeIn(card3), run_time=1.0)
-        self.wait(8.0)  # Voiceover: Explaining R3 - 2R2 gives [0, 0, 1 | -1]
+        self.wait(9.0)  # Voiceover: Explaining R3 - 2R2 gives [0, 0, 1 | -1]
         
         # Update Matrix Row 3
         final_r3_vals = ["0", "0", "1", "-1"]
@@ -590,25 +598,27 @@ class Scene5_BackSubstitution(Scene):
         rank_banner.next_to(header, DOWN, buff=0.25)
         self.play(Write(rank_banner))
         
-        c1_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#10B981", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c_w, c_h = 10.5, 1.15
+        
+        c1_box = RoundedRectangle(corner_radius=0.15, width=c_w, height=c_h, color="#10B981", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
         c1_title = Text("1. Unique Solution (Our Case):", font=FONT_FAMILY, font_size=16, color=COLOR_SUCCESS, weight=BOLD)
-        c1_desc  = Text("Pivots in all 3 columns. Rank = 3. Planes intersect at exactly one point: (1, 4, -1).", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        c1_vg = VGroup(c1_title, c1_desc).arrange(RIGHT, buff=0.3).move_to(c1_box.get_center())
+        c1_desc  = Text("Pivots in all 3 columns (Rank = 3). Planes intersect at exactly one point: (1, 4, -1).", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c1_vg = VGroup(c1_title, c1_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(c1_box.get_center())
         card_c1 = VGroup(c1_box, c1_vg)
         
-        c2_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#EF4444", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
-        c2_title = Text("2. Inconsistent (No Solution):", font=FONT_FAMILY, font_size=16, color=COLOR_TARGET, weight=BOLD)
-        c2_desc  = Text("A row like [ 0  0  0 | 5 ] implies 0 = 5 (contradiction!). Planes are parallel.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        c2_vg = VGroup(c2_title, c2_desc).arrange(RIGHT, buff=0.3).move_to(c2_box.get_center())
+        c2_box = RoundedRectangle(corner_radius=0.15, width=c_w, height=c_h, color="#EF4444", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c2_title = Text("2. Inconsistent System (No Solution):", font=FONT_FAMILY, font_size=16, color=COLOR_TARGET, weight=BOLD)
+        c2_desc  = Text("A row like [ 0  0  0 | 5 ] implies 0 = 5 (contradiction!). Planes do not share a point.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c2_vg = VGroup(c2_title, c2_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(c2_box.get_center())
         card_c2 = VGroup(c2_box, c2_vg)
         
-        c3_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.0, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
-        c3_title = Text("3. Infinite Solutions:", font=FONT_FAMILY, font_size=16, color=COLOR_TITLE, weight=BOLD)
-        c3_desc  = Text("A zero row [ 0  0  0 | 0 ] leaves free variables. Planes intersect along a line.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        c3_vg = VGroup(c3_title, c3_desc).arrange(RIGHT, buff=0.3).move_to(c3_box.get_center())
+        c3_box = RoundedRectangle(corner_radius=0.15, width=c_w, height=c_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        c3_title = Text("3. Infinite Solutions (Underdetermined / Dependent):", font=FONT_FAMILY, font_size=16, color=COLOR_TITLE, weight=BOLD)
+        c3_desc  = Text("A zero row [ 0  0  0 | 0 ] leaves free variables. Planes intersect along a common line/plane.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
+        c3_vg = VGroup(c3_title, c3_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(c3_box.get_center())
         card_c3 = VGroup(c3_box, c3_vg)
         
-        cards_cases = VGroup(card_c1, card_c2, card_c3).arrange(DOWN, buff=0.25).shift(DOWN * 0.4)
+        cards_cases = VGroup(card_c1, card_c2, card_c3).arrange(DOWN, buff=0.22).shift(DOWN * 0.45)
         
         self.play(FadeIn(card_c1), run_time=0.8)
         self.wait(4.0)
@@ -626,25 +636,26 @@ class Scene6_SummaryAndCredits(Scene):
         t_header = Text("Core Takeaways & Recap", font=FONT_FAMILY, font_size=30, color=COLOR_TITLE, weight=BOLD).to_edge(UP, buff=0.6)
         self.play(Write(t_header))
         
-        takeaway1_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.7)
+        tk_w, tk_h = 10.5, 1.2
+        takeaway1_box = RoundedRectangle(corner_radius=0.15, width=tk_w, height=tk_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.75)
         t1_title = Text("1. Augmented Matrix Representation", font=FONT_FAMILY, font_size=18, color=COLOR_TITLE, weight=BOLD)
         t1_desc = Text("Removes algebraic variable clutter and stores clean numerical coefficients [A | b].", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        t1_vg = VGroup(t1_title, t1_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(takeaway1_box.get_center()).shift(LEFT * 0.4)
+        t1_vg = VGroup(t1_title, t1_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(takeaway1_box.get_center())
         card1 = VGroup(takeaway1_box, t1_vg)
         
-        takeaway2_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.7)
+        takeaway2_box = RoundedRectangle(corner_radius=0.15, width=tk_w, height=tk_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.75)
         t2_title = Text("2. Systematic Elimination via Pivots", font=FONT_FAMILY, font_size=18, color=COLOR_ACCENT, weight=BOLD)
         t2_desc = Text("Elementary row operations create zeros below each pivot, forming the upper triangular REF.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        t2_vg = VGroup(t2_title, t2_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(takeaway2_box.get_center()).shift(LEFT * 0.4)
+        t2_vg = VGroup(t2_title, t2_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(takeaway2_box.get_center())
         card2 = VGroup(takeaway2_box, t2_vg)
         
-        takeaway3_box = RoundedRectangle(corner_radius=0.15, width=9.2, height=1.1, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.7)
+        takeaway3_box = RoundedRectangle(corner_radius=0.15, width=tk_w, height=tk_h, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.75)
         t3_title = Text("3. Seamless Back-Substitution", font=FONT_FAMILY, font_size=18, color=COLOR_SUCCESS, weight=BOLD)
         t3_desc = Text("Once decoupled into echelon form, bottom-up substitution yields the unique solution rapidly.", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT)
-        t3_vg = VGroup(t3_title, t3_desc).arrange(DOWN, buff=0.12, aligned_edge=LEFT).move_to(takeaway3_box.get_center()).shift(LEFT * 0.4)
+        t3_vg = VGroup(t3_title, t3_desc).arrange(DOWN, buff=0.1, aligned_edge=LEFT).move_to(takeaway3_box.get_center())
         card3 = VGroup(takeaway3_box, t3_vg)
         
-        cards = VGroup(card1, card2, card3).arrange(DOWN, buff=0.3).shift(DOWN * 0.4)
+        cards = VGroup(card1, card2, card3).arrange(DOWN, buff=0.25).shift(DOWN * 0.45)
         
         self.play(FadeIn(card1), run_time=0.8)
         self.wait(5.0)
@@ -659,55 +670,19 @@ class Scene6_SummaryAndCredits(Scene):
         rref_header = Text("Algorithmic Horizon: REF vs. Reduced Row Echelon Form (RREF)", font=FONT_FAMILY, font_size=20, color=COLOR_ACCENT, weight=BOLD).to_edge(UP, buff=0.6)
         self.play(Write(rref_header))
         
-        rref_box = RoundedRectangle(corner_radius=0.15, width=9.4, height=3.2, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
+        rref_box = RoundedRectangle(corner_radius=0.15, width=10.5, height=3.3, color="#38BDF8", fill_color=COLOR_BOX_BG, fill_opacity=0.85)
         
         rref_p1 = Text("• Gaussian Elimination stops at REF (Upper Triangular) + Back-Substitution.", font=FONT_FAMILY, font_size=15, color=COLOR_TEXT)
         rref_p2 = Text("• Gauss-Jordan Elimination continues upwards, eliminating entries ABOVE pivots.", font=FONT_FAMILY, font_size=15, color=COLOR_TITLE)
         rref_p3 = Text("• The augmented matrix transforms into [ I | x ], revealing the exact solution directly!", font=FONT_FAMILY, font_size=15, color=COLOR_SUCCESS, weight=BOLD)
         rref_p4 = Text("• Computational Efficiency: Gaussian elimination takes ~2/3 n^3 operations (faster),\n  making it the preferred industry standard for large numerical systems.", font=FONT_FAMILY, font_size=13, color=COLOR_SUBTEXT, line_spacing=0.8)
         
-        rref_vg = VGroup(rref_p1, rref_p2, rref_p3, rref_p4).arrange(DOWN, buff=0.22, aligned_edge=LEFT).move_to(rref_box.get_center())
+        rref_vg = VGroup(rref_p1, rref_p2, rref_p3, rref_p4).arrange(DOWN, buff=0.2, aligned_edge=LEFT).move_to(rref_box.get_center())
         rref_group = VGroup(rref_box, rref_vg).shift(DOWN * 0.4)
         
         self.play(FadeIn(rref_group), run_time=1.0)
-        self.wait(8.5)  # Voiceover: Explaining the difference between REF and RREF and computational efficiency
-        
-        self.play(FadeOut(rref_header), FadeOut(rref_group), run_time=0.8)
-        
-        # 2. Closing Frame & Project Credits
-        cred_badge = RoundedRectangle(corner_radius=0.15, width=9.6, height=5.2, color=COLOR_TITLE, stroke_width=2, fill_color=COLOR_BOX_BG, fill_opacity=0.7)
-        
-        cred_title = Text("PROJECT SUBMISSION & CREDITS", font=FONT_FAMILY, font_size=26, color=COLOR_TITLE, weight=BOLD)
-        course_info = Text("Linear Algebra and Calculus (M3) • Internal Assessment (10%)", font=FONT_FAMILY, font_size=18, color=COLOR_SUBTEXT)
-        
-        student_info = VGroup(
-            Text("Student Name: Dheeraj", font=FONT_FAMILY, font_size=22, color=COLOR_ACCENT, weight=BOLD),
-            Text("Student ID: E25B070814", font=FONT_FAMILY, font_size=20, color=COLOR_TEXT),
-            Text("Topic: Gaussian Elimination & Row Echelon Form", font=FONT_FAMILY, font_size=18, color=COLOR_TITLE)
-        ).arrange(DOWN, buff=0.15)
-        
-        div = Line(LEFT * 3.8, RIGHT * 3.8, color=COLOR_SUBTEXT, stroke_width=1.5)
-        
-        tools_info = Text("Animation Engine: Python 3 & Manim Community Engine (v0.22.1)\nVideo Format: 1080p Full HD (16:9 Landscape) • Rendered with FFmpeg", font=FONT_FAMILY, font_size=14, color=COLOR_TEXT, line_spacing=0.8)
-        ai_disclosure = Text("AI Disclosure: Conceptual structuring, storyboard templating, and animation code\ndeveloped with Antigravity AI assistance.", font=FONT_FAMILY, font_size=13, color=COLOR_SUBTEXT, line_spacing=0.7)
-        
-        thanks = Text("Thank you for watching!", font=FONT_FAMILY, font_size=22, color=COLOR_SUCCESS, weight=BOLD)
-        
-        cred_vg = VGroup(
-            cred_title,
-            course_info,
-            student_info,
-            div,
-            tools_info,
-            ai_disclosure,
-            thanks
-        ).arrange(DOWN, buff=0.2).move_to(cred_badge.get_center())
-        
-        cred_group = VGroup(cred_badge, cred_vg)
-        
-        self.play(FadeIn(cred_group), run_time=1.2)
-        self.wait(10.0)  # Voiceover: Wrap up and outro
-        self.play(FadeOut(cred_group), run_time=1.0)
+        self.wait(15.0)  # Slide stays on screen while concluding narration plays
+        self.play(FadeOut(rref_header), FadeOut(rref_group), run_time=1.0)
 
 
 class FullVideo(Scene):
