@@ -31,11 +31,10 @@ This project presents an animated instructional video that teaches **Gaussian El
 ```
 M3_AnimationVideo_GaussianElimination_E25B070814/
 │
-├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (05:11 duration)
+├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (05:43 duration)
 │
 ├── Storyboard.md                # Official 6-Scene Storyboard with visual & math plan
 ├── Voiceover_Script.md          # Second-by-second synchronized narration script
-├── Viva_QA_Preparation.md       # Comprehensive Viva defense & Q&A guide
 │
 ├── _Code/                       # Full animation source code
 │   ├── gaussian_elimination.py  # Production Manim Python script (all 6 scenes)
