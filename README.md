@@ -4,7 +4,7 @@
 ![Assessment](https://img.shields.io/badge/Assessment-M3%20Internal%20(10%25)-blue)
 ![Topic](https://img.shields.io/badge/Topic-Gaussian%20Elimination-yellow)
 ![Resolution](https://img.shields.io/badge/Video-1080p%2016%3A9%20MP4-green)
-![Duration](https://img.shields.io/badge/Duration-05%3A11%20(5--6%20min)-brightgreen)
+![Duration](https://img.shields.io/badge/Duration-05%3A34%20(5--6%20min)-brightgreen)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
 ### Student & Project Credentials
@@ -12,7 +12,7 @@
 - **Student ID:** E25B070814
 - **Course:** Linear Algebra and Calculus (M3)
 - **Submission Requirement:** Public GitHub Repository with Rendered Video, Source Code, and Storyboard
-- **Video Duration:** **05:11 (5 minutes, 11 seconds)** — Perfectly within the **5 to 6 minute** window (strictly below 7 minutes).
+- **Video Duration:** **05:34 (5 minutes, 34 seconds)** — Perfectly within the **5 to 6 minute** window (strictly below 7 minutes).
 
 ---
 
@@ -31,7 +31,7 @@ This project presents an animated instructional video that teaches **Gaussian El
 ```
 M3_AnimationVideo_GaussianElimination_E25B070814/
 │
-├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (05:43 duration)
+├── _Video.mp4                   # Final 1080p 16:9 MP4 Video (05:34 duration)
 │
 ├── Storyboard.md                # Official 6-Scene Storyboard with visual & math plan
 ├── Voiceover_Script.md          # Second-by-second synchronized narration script
